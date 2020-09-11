@@ -1,4 +1,5 @@
 public class ScaleUtils {
+    /*Вспомогательный класс маштабирования*/
     public static void scale(Vector3f vector, double scale){
         double[][] scaleMatrix = {{scale, 0, 0}, {0, scale, 0}, {0, 0, scale}};
         Vector3f bufferVector = new Vector3f(vector.x, vector.y, vector.z);

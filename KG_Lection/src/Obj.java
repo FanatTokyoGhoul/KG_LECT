@@ -1,10 +1,10 @@
 import java.util.ArrayList;
 import java.util.List;
-
+/*Просто класс в котором хранятся парметры 3d объекта*/
 public class Obj extends Object {
-    List<Vector3f> vertices = new ArrayList<>();
-    List<Vector3f> normals = new ArrayList<>();
-    List<List<Vector2f>> mask = new ArrayList<>();
+    private List<Vector3f> vertices = new ArrayList<>(); // Вершины
+    private List<Vector3f> normals = new ArrayList<>(); // Нормали
+    private List<List<Vector2f>> mask = new ArrayList<>(); // Маски
 
     public List<Vector3f> getVertices() {
         return vertices;

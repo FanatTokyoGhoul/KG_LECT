@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 import java.util.StringTokenizer;
-
+/*Класс загрузки .obj файла. Здесь просто парсим весь файл и возваращаем кдасс Obj с параметрами*/
 public class OBJLoader {
     public static Obj loadObj(String path){
         return loadObj(new File(path));

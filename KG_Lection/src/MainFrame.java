@@ -3,9 +3,10 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.awt.image.BufferedImage;
 import java.io.File;
 import java.util.List;
+
+/*Класс главного окна добавил 1 кнопку и саму панель для отрисовки*/
 
 public class MainFrame extends JFrame implements KeyListener {
     public OBJLoader objLoader = new OBJLoader();
@@ -20,7 +21,7 @@ public class MainFrame extends JFrame implements KeyListener {
         setFocusable(true);
         addKeyListener(this);
         setVisible(true);
-        JFileChooser fileChooserObjOpen = new JFileChooser();
+        JFileChooser fileChooserObjOpen = new JFileChooser();/*Окошко для загрузки внешних файлов*/
         fileChooserObjOpen.setCurrentDirectory(new File("./"));
         fileChooserObjOpen.addChoosableFileFilter(new FileNameExtensionFilter("Obj Files (*.obj)", "obj"));
         fileChooserObjOpen.setAcceptAllFileFilterUsed(false);
@@ -35,7 +36,7 @@ public class MainFrame extends JFrame implements KeyListener {
                     System.err.print("Ошибка загрузки файла!");
                 }
             }
-            button.setFocusable(false);
+            button.setFocusable(false);/*Клавиатура не работает если нет фокуса на Frame*/
             this.setFocusable(true);
         });
     }
@@ -115,6 +116,7 @@ public class MainFrame extends JFrame implements KeyListener {
         }
     }
 
+    /*Метод для отрисовки 3d объекта. Здесь мы проходимся по всем маскам  и соединяем вершины с помощью линий*/
     public void drawObj(Graphics2D gr, Obj obj){
         for (List<Vector2f> vector2fList : obj.getMask()) {
             for (int i = 0; i < vector2fList.size(); i++) {
@@ -127,12 +129,16 @@ public class MainFrame extends JFrame implements KeyListener {
                     start = obj.getVertices().get((int) vector2fList.get(i).x - 1);
                     end = obj.getVertices().get((int) vector2fList.get(i + 1).x - 1);
                 }
+                /*Точно так и не понял как это работает. Но формулу нашел в интернете и доказательство для неё
+                  Она считает проекцию 3d объекта на 2d плоскость. Тоесть переводит 3d координаты в 2d.
+                 */
                 double tempZStart = (500 / (-500 + start.z));
                 double tempZEnd = (500 / (-500 + end.z));
                 double x2dStart = start.x * tempZStart;
                 double y2dStart = start.y * tempZStart;
                 double x2dEnd = end.x * tempZEnd;
                 double y2dEnd = end.y * tempZEnd;
+                /*И рисуем линию*/
                 gr.drawLine((int) x2dStart + 250 , (int) y2dStart + 250 , (int) x2dEnd + 250, (int) y2dEnd + 250);
             }
         }

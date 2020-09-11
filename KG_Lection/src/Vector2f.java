@@ -1,4 +1,4 @@
-public class Vector2f {
+public class Vector2f { /*Класс 2d вектора*/
     double x;
     double y;
 

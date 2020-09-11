@@ -1,4 +1,4 @@
-public class Vector3f {
+public class Vector3f { /*Класс 3d вектора*/
     double x;
     double y;
     double z;
