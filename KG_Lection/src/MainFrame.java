@@ -3,15 +3,22 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.io.File;
 import java.util.List;
 
 /*Класс главного окна добавил 1 кнопку и саму панель для отрисовки*/
 
-public class MainFrame extends JFrame implements KeyListener {
+public class MainFrame extends JFrame implements KeyListener, MouseListener {
     public OBJLoader objLoader = new OBJLoader();
     public Obj t = objLoader.loadObj("./obj/Box.obj");
     private Button button = new Button("Load File");
+    private Vector2f startVector = new Vector2f(0,0);/*Для удобства добавил скролинг мышкой*/
+    private Vector2f endVector = new Vector2f(0,0);
+    private int deviationByX = 0;
+    private int deviationByY = 0;
+
 
     public MainFrame() {
         super("Test");
@@ -20,6 +27,7 @@ public class MainFrame extends JFrame implements KeyListener {
         add(button);
         setFocusable(true);
         addKeyListener(this);
+        addMouseListener(this);
         setVisible(true);
         JFileChooser fileChooserObjOpen = new JFileChooser();/*Окошко для загрузки внешних файлов*/
         fileChooserObjOpen.setCurrentDirectory(new File("./"));
@@ -38,6 +46,8 @@ public class MainFrame extends JFrame implements KeyListener {
             }
             button.setFocusable(false);/*Клавиатура не работает если нет фокуса на Frame*/
             this.setFocusable(true);
+            deviationByX = 0;
+            deviationByY = 0;
         });
     }
 
@@ -47,64 +57,105 @@ public class MainFrame extends JFrame implements KeyListener {
     }
 
     @Override
-    public void keyPressed(KeyEvent e) {
-        if(e.getKeyCode() == KeyEvent.VK_W){
-            for (Vector3f vector3f : t.getVertices()) {
-                RotateUtils.rotateX(vector3f, 6);
-                this.repaint();
-            }
-        }else if(e.getKeyCode() == KeyEvent.VK_S){
-            for (Vector3f vector3f : t.getVertices()) {
-                RotateUtils.rotateX(vector3f, -6);
-                this.repaint();
-            }
-        }else if(e.getKeyCode() == KeyEvent.VK_D){
-            for (Vector3f vector3f : t.getVertices()) {
-                RotateUtils.rotateY(vector3f, 6);
-                this.repaint();
-            }
-        }else if(e.getKeyCode() == KeyEvent.VK_A){
-            for (Vector3f vector3f : t.getVertices()) {
-                RotateUtils.rotateY(vector3f, -6);
-                this.repaint();
-            }
-        }else if(e.getKeyCode() == KeyEvent.VK_Q){
-            for (Vector3f vector3f : t.getVertices()) {
-                RotateUtils.rotateX(vector3f, 3);
-                RotateUtils.rotateY(vector3f, -3);
-                this.repaint();
-            }
-        }else if(e.getKeyCode() == KeyEvent.VK_E){
-            for (Vector3f vector3f : t.getVertices()) {
-                RotateUtils.rotateX(vector3f, 3);
-                RotateUtils.rotateY(vector3f, 3);
-                this.repaint();
-            }
-        }else if(e.getKeyCode() == KeyEvent.VK_Z){
-            for (Vector3f vector3f : t.getVertices()) {
-                RotateUtils.rotateZ(vector3f, 6);
-                this.repaint();
-            }
-        }else if(e.getKeyCode() == KeyEvent.VK_X){
-            for (Vector3f vector3f : t.getVertices()) {
-                RotateUtils.rotateZ(vector3f, -6);
-                this.repaint();
-            }
-        }else if(e.getKeyCode() == KeyEvent.VK_O){
-            for (Vector3f vector3f : t.getVertices()) {
-                ScaleUtils.scale(vector3f,1.1);
-                this.repaint();
-            }
-        }else if(e.getKeyCode() == KeyEvent.VK_I){
-            for (Vector3f vector3f : t.getVertices()) {
-                ScaleUtils.scale(vector3f,0.9);
-                this.repaint();
-            }
+    public void keyPressed(KeyEvent e) { /*Пока просто заменил if else на switch case.*/
+        switch (e.getKeyCode()) {        /*Но я ещё подумаю. Есть идея использовать мапы, но она до конца не продумана*/
+            case KeyEvent.VK_W:
+                for (Vector3f vector3f : t.getVertices()) {
+                    RotateUtils.rotateX(vector3f, 6);
+                    this.repaint();
+                }
+                break;
+            case KeyEvent.VK_S:
+                for (Vector3f vector3f : t.getVertices()) {
+                    RotateUtils.rotateX(vector3f, -6);
+                    this.repaint();
+                }
+                break;
+            case KeyEvent.VK_D:
+                for (Vector3f vector3f : t.getVertices()) {
+                    RotateUtils.rotateY(vector3f, 6);
+                    this.repaint();
+                }
+                break;
+            case KeyEvent.VK_A:
+                for (Vector3f vector3f : t.getVertices()) {
+                    RotateUtils.rotateY(vector3f, -6);
+                    this.repaint();
+                }
+                break;
+            case KeyEvent.VK_Q:
+                for (Vector3f vector3f : t.getVertices()) {
+                    RotateUtils.rotateX(vector3f, 3);
+                    RotateUtils.rotateY(vector3f, -3);
+                    this.repaint();
+                }
+                break;
+            case KeyEvent.VK_E:
+                for (Vector3f vector3f : t.getVertices()) {
+                    RotateUtils.rotateX(vector3f, 3);
+                    RotateUtils.rotateY(vector3f, 3);
+                    this.repaint();
+                }
+                break;
+            case KeyEvent.VK_Z:
+                for (Vector3f vector3f : t.getVertices()) {
+                    RotateUtils.rotateZ(vector3f, 6);
+                    this.repaint();
+                }
+                break;
+            case KeyEvent.VK_X:
+                for (Vector3f vector3f : t.getVertices()) {
+                    RotateUtils.rotateZ(vector3f, -6);
+                    this.repaint();
+                }
+                break;
+            case KeyEvent.VK_O:
+                for (Vector3f vector3f : t.getVertices()) {
+                    ScaleUtils.scale(vector3f, 1.1);
+                    this.repaint();
+                }
+                break;
+            case KeyEvent.VK_I:
+                for (Vector3f vector3f : t.getVertices()) {
+                    ScaleUtils.scale(vector3f, 0.9);
+                    this.repaint();
+                }
+                break;
         }
     }
 
     @Override
     public void keyReleased(KeyEvent e) {
+
+    }
+
+    @Override
+    public void mouseClicked(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mousePressed(MouseEvent e) {/*Сама реализация скролинга просто запоминаются 4 координаты и по ним считается отклонение*/
+        startVector.x = e.getX();
+        startVector.y = e.getY();
+    }
+
+    @Override
+    public void mouseReleased(MouseEvent e) {
+        endVector.x = e.getX();
+        endVector.y = e.getY();
+        deviationByX += endVector.x - startVector.x;
+        deviationByY += endVector.y - startVector.y;
+        repaint();
+    }
+
+    @Override
+    public void mouseEntered(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseExited(MouseEvent e) {
 
     }
 
@@ -139,7 +190,7 @@ public class MainFrame extends JFrame implements KeyListener {
                 double x2dEnd = end.x * tempZEnd;
                 double y2dEnd = end.y * tempZEnd;
                 /*И рисуем линию*/
-                gr.drawLine((int) x2dStart + 250 , (int) y2dStart + 250 , (int) x2dEnd + 250, (int) y2dEnd + 250);
+                gr.drawLine((int) x2dStart + 250 + deviationByX, (int) y2dStart + 250 + deviationByY, (int) x2dEnd + 250 + deviationByX, (int) y2dEnd + 250 + deviationByY);
             }
         }
     }

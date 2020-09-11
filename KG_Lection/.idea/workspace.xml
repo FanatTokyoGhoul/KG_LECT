@@ -2,15 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="6873752e-eb17-4efb-92b3-07422154e68f" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/MainFrame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/MainFrame.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/OBJLoader.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/OBJLoader.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Obj.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Obj.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/RotateUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/RotateUtils.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/ScaleUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ScaleUtils.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Vector2f.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Vector2f.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Vector3f.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Vector3f.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -84,7 +80,8 @@
       <updated>1599754942566</updated>
       <workItem from="1599754945356" duration="22436000" />
       <workItem from="1599798745907" duration="3877000" />
-      <workItem from="1599804211759" duration="721000" />
+      <workItem from="1599804211759" duration="1321000" />
+      <workItem from="1599831318829" duration="1889000" />
     </task>
     <servers />
   </component>
@@ -92,10 +89,10 @@
     <option name="version" value="1" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="698" y="226" key="#com.intellij.ide.util.MemberChooser" timestamp="1599774674590">
+    <state x="698" y="226" key="#com.intellij.ide.util.MemberChooser" timestamp="1599831556726">
       <screen x="0" y="0" width="1680" height="1010" />
     </state>
-    <state x="698" y="226" key="#com.intellij.ide.util.MemberChooser/0.0.1680.1010/1680.0.1680.1010@0.0.1680.1010" timestamp="1599774674590" />
+    <state x="698" y="226" key="#com.intellij.ide.util.MemberChooser/0.0.1680.1010/1680.0.1680.1010@0.0.1680.1010" timestamp="1599831556726" />
     <state x="503" y="257" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1599758822060">
       <screen x="0" y="0" width="1680" height="1010" />
     </state>
@@ -104,22 +101,22 @@
       <screen x="0" y="0" width="1680" height="1010" />
     </state>
     <state x="629" y="397" key="FileChooserDialogImpl/0.0.1680.1010/1680.0.1680.1010@0.0.1680.1010" timestamp="1599801910436" />
-    <state width="1340" height="256" key="GridCell.Tab.0.bottom" timestamp="1599803482491">
+    <state width="1340" height="256" key="GridCell.Tab.0.bottom" timestamp="1599833211331">
       <screen x="0" y="0" width="1680" height="1010" />
     </state>
-    <state width="1340" height="256" key="GridCell.Tab.0.bottom/0.0.1680.1010/1680.0.1680.1010@0.0.1680.1010" timestamp="1599803482491" />
-    <state width="1340" height="256" key="GridCell.Tab.0.center" timestamp="1599803482491">
+    <state width="1340" height="256" key="GridCell.Tab.0.bottom/0.0.1680.1010/1680.0.1680.1010@0.0.1680.1010" timestamp="1599833211331" />
+    <state width="1340" height="256" key="GridCell.Tab.0.center" timestamp="1599833211331">
       <screen x="0" y="0" width="1680" height="1010" />
     </state>
-    <state width="1340" height="256" key="GridCell.Tab.0.center/0.0.1680.1010/1680.0.1680.1010@0.0.1680.1010" timestamp="1599803482491" />
-    <state width="1340" height="256" key="GridCell.Tab.0.left" timestamp="1599803482491">
+    <state width="1340" height="256" key="GridCell.Tab.0.center/0.0.1680.1010/1680.0.1680.1010@0.0.1680.1010" timestamp="1599833211331" />
+    <state width="1340" height="256" key="GridCell.Tab.0.left" timestamp="1599833211331">
       <screen x="0" y="0" width="1680" height="1010" />
     </state>
-    <state width="1340" height="256" key="GridCell.Tab.0.left/0.0.1680.1010/1680.0.1680.1010@0.0.1680.1010" timestamp="1599803482491" />
-    <state width="1340" height="256" key="GridCell.Tab.0.right" timestamp="1599803482491">
+    <state width="1340" height="256" key="GridCell.Tab.0.left/0.0.1680.1010/1680.0.1680.1010@0.0.1680.1010" timestamp="1599833211331" />
+    <state width="1340" height="256" key="GridCell.Tab.0.right" timestamp="1599833211331">
       <screen x="0" y="0" width="1680" height="1010" />
     </state>
-    <state width="1340" height="256" key="GridCell.Tab.0.right/0.0.1680.1010/1680.0.1680.1010@0.0.1680.1010" timestamp="1599803482491" />
+    <state width="1340" height="256" key="GridCell.Tab.0.right/0.0.1680.1010/1680.0.1680.1010@0.0.1680.1010" timestamp="1599833211331" />
     <state width="1340" height="316" key="GridCell.Tab.1.bottom" timestamp="1599799858086">
       <screen x="0" y="0" width="1680" height="1010" />
     </state>
@@ -136,6 +133,10 @@
       <screen x="0" y="0" width="1680" height="1010" />
     </state>
     <state width="1340" height="316" key="GridCell.Tab.1.right/0.0.1680.1010/1680.0.1680.1010@0.0.1680.1010" timestamp="1599799858086" />
+    <state x="561" y="410" key="com.intellij.ide.util.TipDialog" timestamp="1599831364550">
+      <screen x="0" y="0" width="1680" height="1010" />
+    </state>
+    <state x="561" y="410" key="com.intellij.ide.util.TipDialog/0.0.1680.1010/1680.0.1680.1010@0.0.1680.1010" timestamp="1599831364550" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
