@@ -1,16 +1,13 @@
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
+import java.awt.event.*;
 import java.io.File;
 import java.util.List;
 
 /*Класс главного окна добавил 1 кнопку и саму панель для отрисовки*/
 
-public class MainFrame extends JFrame implements KeyListener, MouseListener {
+public class MainFrame extends JFrame implements KeyListener, MouseListener, MouseMotionListener, MouseWheelListener {
     public OBJLoader objLoader = new OBJLoader();
     public Obj t = objLoader.loadObj("./obj/Box.obj");
     private Button button = new Button("Load File");
@@ -18,6 +15,9 @@ public class MainFrame extends JFrame implements KeyListener, MouseListener {
     private Vector2f endVector = new Vector2f(0,0);
     private int deviationByX = 0;
     private int deviationByY = 0;
+    private int rotateX = 0;
+    private int rotateY = 0;
+    private boolean inversion = false;
 
 
     public MainFrame() {
@@ -28,6 +28,8 @@ public class MainFrame extends JFrame implements KeyListener, MouseListener {
         setFocusable(true);
         addKeyListener(this);
         addMouseListener(this);
+        addMouseMotionListener(this);
+        addMouseWheelListener(this);
         setVisible(true);
         JFileChooser fileChooserObjOpen = new JFileChooser();/*Окошко для загрузки внешних файлов*/
         fileChooserObjOpen.setCurrentDirectory(new File("./"));
@@ -60,54 +62,38 @@ public class MainFrame extends JFrame implements KeyListener, MouseListener {
     public void keyPressed(KeyEvent e) { /*Пока просто заменил if else на switch case.*/
         switch (e.getKeyCode()) {        /*Но я ещё подумаю. Есть идея использовать мапы, но она до конца не продумана*/
             case KeyEvent.VK_W:
-                for (Vector3f vector3f : t.getVertices()) {
-                    RotateUtils.rotateX(vector3f, 6);
+                    RotateUtils.rotateX(t.getVertices(), 6);
                     this.repaint();
-                }
                 break;
             case KeyEvent.VK_S:
-                for (Vector3f vector3f : t.getVertices()) {
-                    RotateUtils.rotateX(vector3f, -6);
+                    RotateUtils.rotateX(t.getVertices(), -6);
                     this.repaint();
-                }
                 break;
             case KeyEvent.VK_D:
-                for (Vector3f vector3f : t.getVertices()) {
-                    RotateUtils.rotateY(vector3f, 6);
+                    RotateUtils.rotateY(t.getVertices(), 6);
                     this.repaint();
-                }
                 break;
             case KeyEvent.VK_A:
-                for (Vector3f vector3f : t.getVertices()) {
-                    RotateUtils.rotateY(vector3f, -6);
+                    RotateUtils.rotateY(t.getVertices(), -6);
                     this.repaint();
-                }
                 break;
             case KeyEvent.VK_Q:
-                for (Vector3f vector3f : t.getVertices()) {
-                    RotateUtils.rotateX(vector3f, 3);
-                    RotateUtils.rotateY(vector3f, -3);
+                    RotateUtils.rotateX(t.getVertices(), 3);
+                    RotateUtils.rotateY(t.getVertices(), -3);
                     this.repaint();
-                }
                 break;
             case KeyEvent.VK_E:
-                for (Vector3f vector3f : t.getVertices()) {
-                    RotateUtils.rotateX(vector3f, 3);
-                    RotateUtils.rotateY(vector3f, 3);
+                    RotateUtils.rotateX(t.getVertices(), 3);
+                    RotateUtils.rotateY(t.getVertices(), 3);
                     this.repaint();
-                }
                 break;
             case KeyEvent.VK_Z:
-                for (Vector3f vector3f : t.getVertices()) {
-                    RotateUtils.rotateZ(vector3f, 6);
+                    RotateUtils.rotateZ(t.getVertices(), 6);
                     this.repaint();
-                }
                 break;
             case KeyEvent.VK_X:
-                for (Vector3f vector3f : t.getVertices()) {
-                    RotateUtils.rotateZ(vector3f, -6);
+                    RotateUtils.rotateZ(t.getVertices(), -6);
                     this.repaint();
-                }
                 break;
             case KeyEvent.VK_O:
                 for (Vector3f vector3f : t.getVertices()) {
@@ -121,12 +107,19 @@ public class MainFrame extends JFrame implements KeyListener, MouseListener {
                     this.repaint();
                 }
                 break;
+            case KeyEvent.VK_SPACE:
+                inversion = true;
+                break;
         }
     }
 
     @Override
     public void keyReleased(KeyEvent e) {
-
+        switch (e.getKeyCode()){
+            case KeyEvent.VK_SPACE:
+                inversion = false;
+                break;
+        }
     }
 
     @Override
@@ -135,17 +128,13 @@ public class MainFrame extends JFrame implements KeyListener, MouseListener {
     }
 
     @Override
-    public void mousePressed(MouseEvent e) {/*Сама реализация скролинга просто запоминаются 4 координаты и по ним считается отклонение*/
+    public void mousePressed(MouseEvent e) {/*Сама реализация скролинга сначала запоминаются 2 начальныекоординаты*/
         startVector.x = e.getX();
         startVector.y = e.getY();
     }
 
     @Override
     public void mouseReleased(MouseEvent e) {
-        endVector.x = e.getX();
-        endVector.y = e.getY();
-        deviationByX += endVector.x - startVector.x;
-        deviationByY += endVector.y - startVector.y;
         repaint();
     }
 
@@ -159,11 +148,66 @@ public class MainFrame extends JFrame implements KeyListener, MouseListener {
 
     }
 
+    @Override
+    public void mouseDragged(MouseEvent e) {/*А здесь идёт пересчет отклонения*/
+        if(inversion) {
+            endVector.x = e.getX();
+            endVector.y = e.getY();
+            deviationByX += endVector.x - startVector.x;
+            deviationByY += endVector.y - startVector.y;
+            repaint();
+            startVector.x = e.getX();
+            startVector.y = e.getY();
+        }else {
+            endVector.x = e.getX();
+            endVector.y = e.getY();
+            rotateX = (int) (endVector.x - startVector.x);
+            rotateY = (int) (endVector.y - startVector.y);
+            RotateUtils.rotateY(t.getVertices(),  rotateX);
+            RotateUtils.rotateX(t.getVertices(), -1*rotateY);
+
+            repaint();
+            startVector.x = e.getX();
+            startVector.y = e.getY();
+        }
+    }
+
+    @Override
+    public void mouseMoved(MouseEvent e) {
+
+    }
+
+    /*Увелечения размера с помощью колёсика мыши*/
+
+    @Override
+    public void mouseWheelMoved(MouseWheelEvent e) {
+        int rotation = -1 * e.getWheelRotation();
+        for (Vector3f vector3f : t.getVertices()) {
+            ScaleUtils.scale(vector3f, rotation * 0.1 + 1);
+            this.repaint();
+        }
+
+    }
+
     class DrawPanel3D extends JPanel {
         @Override
         public void paint(Graphics graphics) {
             Graphics2D gr = (Graphics2D) graphics;
-            drawObj(gr, t);
+            drawObjTest(gr, t);
+        }
+    }
+
+    public void drawObjTest(Graphics2D gr, Obj obj){
+        for (List<Vector2f> vector2fList : obj.getMask()) {
+            int[] arrayX = new int[vector2fList.size()];
+            int[] arrayY = new int[vector2fList.size()];
+            double[] arrayZ = new double[vector2fList.size()];
+            for (int i = 0; i < vector2fList.size(); i++) {
+                arrayX[i] = (int)(obj.getVertices().get((int) vector2fList.get(i).x - 1).x * (500/(-500 + obj.getVertices().get((int) vector2fList.get(i).x - 1).z)) + 250 + deviationByX);
+                arrayY[i] = (int)(obj.getVertices().get((int) vector2fList.get(i).x - 1).y * (500/(-500 + obj.getVertices().get((int) vector2fList.get(i).x - 1).z)) + 250 + deviationByY);
+                //arrayZ[i] = obj.getVertices().get((int) vector2fList.get(i).x - 1).z;
+            }
+            gr.fillPolygon(arrayX,arrayY,vector2fList.size());
         }
     }
 

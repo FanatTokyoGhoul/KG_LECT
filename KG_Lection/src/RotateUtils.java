@@ -1,21 +1,29 @@
+import java.util.List;
+
 public class RotateUtils {
     /*Вспомогательный класс для поворотов по осям XYZ*/
-    public static void rotateX(Vector3f vector, int corner) { //По оси X
+    public static void rotateX(List<Vector3f> vectors, int corner) { //По оси X
         double a = Math.PI * corner / 180;
         double[][] rotateMatrix = {{1, 0, 0}, {0, Math.cos(a), -Math.sin(a)}, {0, Math.sin(a), Math.cos(a)}};
-        multiplyingAVectorByAMatrix(vector, rotateMatrix);
+        for (Vector3f vector3f : vectors) {
+            multiplyingAVectorByAMatrix(vector3f, rotateMatrix);
+        }
     }
 
-    public static void rotateY(Vector3f vector, int corner) { // ПО оси Y
+    public static void rotateY(List<Vector3f> vectors, int corner) { // ПО оси Y
         double a = Math.PI * corner / 180;
         double[][] rotateMatrix = {{Math.cos(a), 0, Math.sin(a)}, {0, 1, 0}, {-Math.sin(a), 0, Math.cos(a)}};
-        multiplyingAVectorByAMatrix(vector, rotateMatrix);
+        for (Vector3f vector3f : vectors) {
+            multiplyingAVectorByAMatrix(vector3f, rotateMatrix);
+        }
     }
 
-    public static void rotateZ(Vector3f vector, int corner) { // ПО оси Z
+    public static void rotateZ(List<Vector3f> vectors, int corner) { // ПО оси Z
         double a = Math.PI * corner / 180;
         double[][] rotateMatrix = {{Math.cos(a), -Math.sin(a), 0}, {Math.sin(a), Math.cos(a), 0}, {0, 0, 1}};
-        multiplyingAVectorByAMatrix(vector, rotateMatrix);
+        for (Vector3f vector3f : vectors) {
+            multiplyingAVectorByAMatrix(vector3f, rotateMatrix);
+        }
     }
 
     /*Чуть уменьшил код. Вынес умножение в отдельный метод*/
