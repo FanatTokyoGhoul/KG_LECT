@@ -22,7 +22,31 @@ public class MainFrame extends JFrame implements KeyListener, MouseListener, Mou
 
     public MainFrame() {
         super("Test");
-        setMinimumSize(new Dimension(500, 500));
+        setMinimumSize(new Dimension(800, 800));
+        start();
+        setVisible(true);
+        try {
+            Thread.sleep(5000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        next();
+        setVisible(true);
+    }
+
+    private void start(){
+        JPanel panel = new JPanel();
+        BoxLayout layout = new BoxLayout(panel, BoxLayout.PAGE_AXIS);
+        Font font = new Font(Font.SERIF, Font.BOLD, 40);
+        JLabel textPanel = new JLabel("Сделано с любовью для Кирилла! :)");
+        textPanel.setFont(font);
+        panel.add(new GifPanel());
+        panel.add(textPanel);
+        this.setContentPane(panel);
+        repaint();
+    }
+
+    private void next(){
         setContentPane(new DrawPanel3D());
         add(button);
         setFocusable(true);
@@ -30,7 +54,6 @@ public class MainFrame extends JFrame implements KeyListener, MouseListener, Mou
         addMouseListener(this);
         addMouseMotionListener(this);
         addMouseWheelListener(this);
-        setVisible(true);
         JFileChooser fileChooserObjOpen = new JFileChooser();/*Окошко для загрузки внешних файлов*/
         fileChooserObjOpen.setCurrentDirectory(new File("./"));
         fileChooserObjOpen.addChoosableFileFilter(new FileNameExtensionFilter("Obj Files (*.obj)", "obj"));
@@ -38,24 +61,23 @@ public class MainFrame extends JFrame implements KeyListener, MouseListener, Mou
         fileChooserObjOpen.setDialogType(JFileChooser.SAVE_DIALOG);
         fileChooserObjOpen.setApproveButtonText("Load");
         button.addActionListener(e -> {
-            if (fileChooserObjOpen.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
-                try {
-                    t = objLoader.loadObj(fileChooserObjOpen.getSelectedFile());
-                    this.repaint();
-                } catch (Exception exc) {
-                    System.err.print("Ошибка загрузки файла!");
-                }
+            if (fileChooserObjOpen.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {              try {
+                t = objLoader.loadObj(fileChooserObjOpen.getSelectedFile());
+                this.repaint();
+            } catch (Exception exc) {
+                System.err.print("Ошибка загрузки файла!");
+            }
             }
             button.setFocusable(false);/*Клавиатура не работает если нет фокуса на Frame*/
             this.setFocusable(true);
             deviationByX = 0;
             deviationByY = 0;
         });
+        repaint();
     }
 
     @Override
-    public void keyTyped(KeyEvent e) {
-
+    public void keyTyped(KeyEvent ez) {
     }
 
     @Override
@@ -203,9 +225,8 @@ public class MainFrame extends JFrame implements KeyListener, MouseListener, Mou
             int[] arrayY = new int[vector2fList.size()];
             double[] arrayZ = new double[vector2fList.size()];
             for (int i = 0; i < vector2fList.size(); i++) {
-                arrayX[i] = (int)(obj.getVertices().get((int) vector2fList.get(i).x - 1).x * (500/(-500 + obj.getVertices().get((int) vector2fList.get(i).x - 1).z)) + 250 + deviationByX);
-                arrayY[i] = (int)(obj.getVertices().get((int) vector2fList.get(i).x - 1).y * (500/(-500 + obj.getVertices().get((int) vector2fList.get(i).x - 1).z)) + 250 + deviationByY);
-                //arrayZ[i] = obj.getVertices().get((int) vector2fList.get(i).x - 1).z;
+                arrayX[i] = (int)(obj.getVertices().get((int) vector2fList.get(i).x - 1).x * (500/(-500 + obj.getVertices().get((int) vector2fList.get(i).x - 1).z)) + getWidth()/2  + deviationByX);
+                arrayY[i] = (int)(obj.getVertices().get((int) vector2fList.get(i).x - 1).y * (500/(-500 + obj.getVertices().get((int) vector2fList.get(i).x - 1).z)) + getHeight()/2  + deviationByY);
             }
             gr.fillPolygon(arrayX,arrayY,vector2fList.size());
         }
@@ -234,7 +255,7 @@ public class MainFrame extends JFrame implements KeyListener, MouseListener, Mou
                 double x2dEnd = end.x * tempZEnd;
                 double y2dEnd = end.y * tempZEnd;
                 /*И рисуем линию*/
-                gr.drawLine((int) x2dStart + 250 + deviationByX, (int) y2dStart + 250 + deviationByY, (int) x2dEnd + 250 + deviationByX, (int) y2dEnd + 250 + deviationByY);
+                gr.drawLine((int) x2dStart + getWidth()/2 + deviationByX, (int) y2dStart + getHeight()/2 + deviationByY, (int) x2dEnd + getWidth()/2  + deviationByX, (int) y2dEnd + getHeight()/2 + deviationByY);
             }
         }
     }
